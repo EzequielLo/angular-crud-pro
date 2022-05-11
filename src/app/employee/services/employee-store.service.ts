@@ -7,6 +7,7 @@ import { EmployeeService } from './employee.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class EmployeeStoreService extends Store<Employee[]> {
 
   constructor(private service: EmployeeService) {

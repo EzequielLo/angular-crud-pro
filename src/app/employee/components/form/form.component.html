@@ -1,17 +1,26 @@
 <div class="container">
   <mat-card>
     <form class="example-form" [formGroup]="formEmployee">
-      <mat-form-field class="example-full-width" appearance="fill">
+      <mat-form-field class=" example-full-width" appearance="fill">
         <mat-label>Name:</mat-label>
         <input matInput formControlName="firstName" placeholder="Ex. Heading...">
+        <div *ngIf="formEmployee.get('firstName')!.dirty && !formEmployee.get('firstName')!.valid">
+          <mat-error *ngIf="formEmployee.invalid">El nombre debe tener al menos 2 caracteres</mat-error>
+        </div>
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>LastName:</mat-label>
         <input matInput formControlName="lastName" placeholder="Ex. Content...">
+        <div *ngIf="formEmployee.get('lastName')!.dirty && !formEmployee.get('lastName')!.valid">
+          <mat-error *ngIf="formEmployee.invalid">El apellido debe tener al menos 2 caracteres</mat-error>
+        </div>
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Email:</mat-label>
         <input matInput formControlName="emailId" placeholder="Ex. Content...">
+        <div *ngIf="formEmployee.get('emailId')!.dirty && !formEmployee.get('emailId')!.valid">
+          <mat-error *ngIf="formEmployee.invalid">Email no valido</mat-error>
+        </div>
       </mat-form-field>
       <mat-card-actions align="end">
         <button mat-raised-button color="primary" *ngIf="action === ''" (click)="onCreate()">Create</button>

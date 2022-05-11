@@ -14,11 +14,11 @@ export class IsSaveGuard implements CanDeactivate<FormComponent> {
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
 
-    if (component.formEmployee.dirty || component.onUpdate) {
-      return confirm('Save changes?');
+    if (component.formEmployee.dirty) {
+
+      return confirm('You have unsaved changes. Are you sure you want to navigate away?');
     }
     return true;
-
   }
 
 }

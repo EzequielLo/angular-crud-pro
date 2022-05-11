@@ -7,13 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Page404Component } from './shared/page404/page404.component';
 import { MarterialModule } from './shared/material/material.module';
 import { EmployeeIdResolver } from './employee/resolvers/employee-id.resolver';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SpinnerComponent } from './shared/utils/spinner/spinner/spinner.component';
+import { SpinnerInterceptor } from './shared/utils/spinner/spinner.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Page404Component
+    Page404Component,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [EmployeeIdResolver],
+  providers: [EmployeeIdResolver,
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

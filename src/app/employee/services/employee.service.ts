@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Employee } from '../model/employee';
 import { FormEmployee } from '../model/form-employee';
@@ -10,6 +10,8 @@ import { EmployeeProxyService } from './employee-proxy.service';
 })
 
 export class EmployeeService {
+
+  isLoading$ = new Subject<Boolean>();
 
   constructor(private proxy: EmployeeProxyService) { }
 
@@ -72,5 +74,14 @@ export class EmployeeService {
       lastName: employee.lastName,
       emailId: employee.emailId
     };
+  }
+
+
+  show(): void {
+    this.isLoading$.next(true);
+  }
+
+  hide(): void {
+    this.isLoading$.next(false);
   }
 }

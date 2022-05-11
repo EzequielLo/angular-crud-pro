@@ -16,7 +16,8 @@ export class FormComponent implements OnInit {
   formEmployee = this.fb.group({
     firstName: [[""], [Validators.pattern(/[a-z]{1,20}/g)]],
     lastName: [[""], [Validators.pattern(/[a-z]{1,20}/g)]],
-    emailId: [[""], [Validators.pattern(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)]],
+    emailId: [[""], [Validators.pattern(
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)]],
   });
   action = '';
 
@@ -38,20 +39,34 @@ export class FormComponent implements OnInit {
   }
 
   async onCreate() {
-    await this.serviceStore.create(this.formEmployee.value);
-    this.goToEmployeeList();
+    if (this.formEmployee.invalid) {
+      this.formEmployee.markAllAsTouched();
+
+      return
+
+    } else {
+      await this.serviceStore.create(this.formEmployee.value);
+      this.goToEmployeeList();
+    }
   }
 
   async onUpdate() {
-    const id = this.employee.id;
-    const firstName = this.formEmployee.get('firstName')!.value;
-    const lastName = this.formEmployee.get('lastName')!.value;
-    const emailId = this.formEmployee.get('emailId')!.value;
-    const employee = {
-      id, firstName, lastName, emailId
-    };
-    await this.serviceStore.update(id, employee);
-    this.goToEmployeeList();
+    if (this.formEmployee.invalid) {
+      this.formEmployee.markAllAsTouched();
+
+      return
+
+    } else {
+      const id = this.employee.id;
+      const firstName = this.formEmployee.get('firstName')!.value;
+      const lastName = this.formEmployee.get('lastName')!.value;
+      const emailId = this.formEmployee.get('emailId')!.value;
+      const employee = {
+        id, firstName, lastName, emailId
+      };
+      await this.serviceStore.update(id, employee);
+      this.goToEmployeeList();
+    }
   }
 
   onCancel() {
@@ -60,6 +75,6 @@ export class FormComponent implements OnInit {
 
   goToEmployeeList() {
     this.router.navigate(['employees/data'])
-
   }
+
 }
