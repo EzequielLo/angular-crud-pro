@@ -53,6 +53,19 @@ describe('EmployeeProxyService', () => {
     httpMock.verify();
   });
 
+  it('should get employee from server', () => {
+    const service = TestBed.inject(EmployeeProxyService);
+    const httpMock = TestBed.inject(HttpTestingController);
+    service
+      .getEmployeeById$(id)
+      .subscribe((employee: Employee) => expect(employee).toBe(fakeEmployee));
+
+    const request = httpMock.expectOne(`${baseURL}/${id}`);
+    expect(request.request.method).toEqual('GET');
+    request.flush(fakeEmployee);
+    httpMock.verify();
+  });
+
   it('should create employees from server', () => {
     const service = TestBed.inject(EmployeeProxyService);
     const httpMock = TestBed.inject(HttpTestingController);
@@ -75,19 +88,6 @@ describe('EmployeeProxyService', () => {
 
     const request = httpMock.expectOne(`${baseURL}/${id}`);
     expect(request.request.method).toEqual('PUT');
-    request.flush(fakeEmployee);
-    httpMock.verify();
-  });
-
-  it('should get employee from server', () => {
-    const service = TestBed.inject(EmployeeProxyService);
-    const httpMock = TestBed.inject(HttpTestingController);
-    service
-      .getEmployeeById$(id)
-      .subscribe((employee: Employee) => expect(employee).toBe(fakeEmployee));
-
-    const request = httpMock.expectOne(`${baseURL}/${id}`);
-    expect(request.request.method).toEqual('GET');
     request.flush(fakeEmployee);
     httpMock.verify();
   });

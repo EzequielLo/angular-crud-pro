@@ -14,9 +14,9 @@ export class FormComponent implements OnInit {
 
   employee!: Employee;
   formEmployee = this.fb.group({
-    firstName: [[""], [Validators.pattern(/[a-z]{1,20}/g)]],
-    lastName: [[""], [Validators.pattern(/[a-z]{1,20}/g)]],
-    emailId: [[""], [Validators.pattern(
+    firstName: [[""], [Validators.required, Validators.pattern(/[a-z]{1,20}/g)]],
+    lastName: [[""], [Validators.required, Validators.pattern(/[a-z]{1,20}/g)]],
+    emailId: [[""], [Validators.required, Validators.pattern(
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)]],
   });
   action = '';
